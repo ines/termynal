@@ -84,7 +84,7 @@ Each `<span>` within the container represents a line of code. You can customise 
 
 ### `data-ty-prompt`: prompt style
 
-The prompt style specifys the characters that are displayed before each line, for example, to indicate command line inputs or interpreters – for example `>>>` for Python. By default, Termynal displays a `$` before each user input line.
+The prompt style specifies the characters that are displayed before each line, for example, to indicate command line inputs or interpreters (like `>>>` for Python). By default, Termynal displays a `$` before each user input line.
 
 | Attributes |  Output |
 | --- | --- |
