@@ -12,7 +12,7 @@ Termynal uses **`async` and `await`**, which is now [supported](http://caniuse.c
 ## Examples
 
 * **Simple example:** [CodePen demo](https://codepen.io/ines/full/MoaRYM/), [`example.html`](example.html)
-* **Complex example:** [CodePen demo](https://codepen.io/ines/pen/mwegrX), [`example2.html`](example2.html)
+* **Custom example:** [CodePen demo](https://codepen.io/ines/pen/mwegrX), [`example2.html`](example2.html)
 
 ## Usage
 
