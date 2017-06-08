@@ -79,7 +79,7 @@ Each `<span>` within the container represents a line of code. You can customise 
 | Value | Description | Example |
 | --- | --- | --- |
 | - | Simple output, no typing. | `<span data-ty>Successfuly installed spacy</span>` |
-| `input` | Simple prompt with user input and cursor | `<span data-ty="user">pip install spacy</span>` |
+| `input` | Simple prompt with user input and cursor | `<span data-ty="input">pip install spacy</span>` |
 | `progress` | Animated progress bar | `<span data-ty="progress"></span>` |
 
 ### `data-ty-prompt`: prompt style
