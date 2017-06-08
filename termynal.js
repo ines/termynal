@@ -50,7 +50,7 @@ class Termynal {
         this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)];
         const containerStyle = getComputedStyle(this.container);
         this.container.style.width = containerStyle.width;
-        this.container.style.height = containerStyle.height;
+        this.container.style.minHeight = containerStyle.height;
         this.container.setAttribute('data-termynal', '');
         this.container.innerHTML = '';
         this.start();
