@@ -19,7 +19,7 @@ Termynal uses **`async` and `await`**, which is now [supported](http://caniuse.c
 First, you need to create a container. Each container should have a unique class or ID that tells Termynal where to find the lines to animate. Terminal will find the lines via their `data-ty` attribute and will then animate their text content. Apart from that, it won't mess with your markup – so you're free to add additional styling and attributes.
 
 ```html
-<div id="termynal">
+<div id="termynal" data-termynal>
     <span data-ty="input">pip install spaCy</span>
     <span data-ty="progress"></span>
     <span data-ty>Successfully installed spacy</span>
