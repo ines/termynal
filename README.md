@@ -115,3 +115,26 @@ You can change the style by customising the elements in [termynal.css](terminal.
     color: red;
 }
 ```
+
+### `data-ty-cursor`: display a cursor
+
+Each line set to `data-ty="input"` will be rendered with an animated cursor. Termynal does this by adding a `data-ty-cursor` attribute, and removing it when the line animation has completed (after the delay specified as `lineDelay`). The value of the `data-ty-cursor` sets the cursor style – by default, a small unicode block is used: `▋`. You can set a custom cursor character in the global settings, or overwrite it on a particular line:
+
+```html
+<div id="#termynal" data-termynal data-ty-cursor="|">
+    <span data-ty="input">Animated with cursor |</span>
+    <span data-ty="input" data-ty-cursor="▋">Animated with cursor ▋</span>
+</div>
+```
+
+You can also change the cursor style and animation in [`termynal.css`](termynal.css):
+
+```css
+[data-ty-cursor]:after {
+    content: attr(data-ty-cursor);
+    font-family: monospace;
+    margin-left: 0.5em;
+    -webkit-animation: blink 1s infinite;
+            animation: blink 1s infinite;
+}
+```
