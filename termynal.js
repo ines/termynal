@@ -23,6 +23,7 @@ class Termynal {
      * @param {number} options.progressLength - Number of characters displayed as progress bar.
      * @param {string} options.progressChar – Character to use for progress bar, defaults to █.
      * @param {string} options.cursor – Character to use for cursor, defaults to ▋.
+     * @param {Object[]} lineData - Dynamically loaded line data objects.
      * @param {boolean} options.noInit - Don't initialise the animation.
      */
     constructor(container = '#termynal', options = {}) {
@@ -40,6 +41,7 @@ class Termynal {
             || this.container.getAttribute(`${this.pfx}-progressChar`) || '█';
         this.cursor = options.cursor
             || this.container.getAttribute(`${this.pfx}-cursor`) || '▋';
+        this.lineData = this.lineDataToElements(options.lineData || []);
         if (!options.noInit) this.init()
     }
 
@@ -47,10 +49,19 @@ class Termynal {
      * Initialise the widget, get lines, clear container and start animation.
      */
     init() {
-        this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)];
+        // Appends dynamically loaded lines to existing line elements.
+        this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)].concat(this.lineData);
+
+        /** 
+         * Calculates width and height of Termynal container.
+         * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
+         */ 
         const containerStyle = getComputedStyle(this.container);
-        this.container.style.width = containerStyle.width;
-        this.container.style.minHeight = containerStyle.height;
+        this.container.style.width = containerStyle.width !== '0px' ? 
+            containerStyle.width : undefined;
+        this.container.style.minHeight = containerStyle.height !== '0px' ? 
+            containerStyle.height : undefined;
+
         this.container.setAttribute('data-termynal', '');
         this.container.innerHTML = '';
         this.start();
@@ -128,6 +139,40 @@ class Termynal {
      */
     _wait(time) {
         return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    /**
+     * Converts line data objects into line elements.
+     * 
+     * @param {Object[]} lineData - Dynamically loaded lines.
+     * @param {Object} line - Line data object.
+     * @param {string} line.value - Text content to use in the line element.
+     * @param {string} line.type - Display and animation style.
+     * @param {string} line.prompt - Prefix for a line element.
+     * @param {number} line.typeDelay - Delay between each typed character, in ms.
+     * @param {number} line.delay - Delay before next line, in ms.
+     * @param {number} line.progressLength - Number of characters displayed as progress bar.
+     * @param {string} line.progressChar - Character to use for progress bar, defaults to █.
+     * @param {string} line.cursor - Character to use for cursor, defaults to ▋.
+     * @returns {Element[]} - Array of line elements.
+     */
+    lineDataToElements(lineData) {
+        return lineData.map(line => {
+            let div = document.createElement('div');
+            div.innerHTML = `
+                <span
+                    ${this.pfx}="${line.type || ''}"
+                    ${line.prompt ? `${this.pfx}-prompt="${line.prompt}"` : ''}
+                    ${line.typeDelay ? `${this.pfx}-typeDelay="${line.typeDelay}"` : ''}
+                    ${line.delay ? `${this.pfx}-delay="${line.delay}"` : ''}
+                    ${line.progressLength ? `${this.pfx}-progressLength="${line.progressLength}"` : ''}
+                    ${line.progressChar ? `${this.pfx}-progressChar="${line.progressChar}"` : ''}
+                    ${line.cursor ? `${this.pfx}-cursor="${line.cursor}"` : ''}
+                >${line.value || ''}</span>
+            `;
+          
+            return div.firstElementChild;
+        });
     }
 }
 
