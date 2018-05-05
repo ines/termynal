@@ -69,6 +69,7 @@ The following settings are available:
 | `progressChar` | string | `'█'` | Character to use for progress bar. |
 | `cursor` | string | `'▋'` | Character to use for cursor. |
 | `noInit` | boolean | `false` | Don't initialise the animation on load. This means you can call `Termynal.init()` yourself whenever and however you want.
+| `lineData` | Object[] | `null` | [Dynamically load](#dynamically-loading-lines) lines at instantiation.
 
 ## Prompts and animations
 
@@ -137,4 +138,21 @@ You can also change the cursor style and animation in [`termynal.css`](termynal.
     -webkit-animation: blink 1s infinite;
             animation: blink 1s infinite;
 }
+```
+
+### Dynamically loading lines
+
+Lines can be dynamically loaded by passing an array of line data objects, using the [attribute suffixes](#data-ty-prompt-prompt-style), as a property of the [settings](#customising-termynal) object.
+
+```javascript
+var termynal = new Termynal('#termynal',
+    {
+        lineData: [
+            { type: 'input', value: 'pip install spacy' },
+            { value: 'Are you sure you want to install \'spaCy\'?' },
+            { type: 'input',  typeDelay: 1000, prompt: '(y/n)', value: 'y' },
+            { delay: 1000, value: 'Installing spaCy...' }
+        ]
+    }
+)
 ```
