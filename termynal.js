@@ -146,33 +146,36 @@ class Termynal {
      * 
      * @param {Object[]} lineData - Dynamically loaded lines.
      * @param {Object} line - Line data object.
-     * @param {string} line.value - Text content to use in the line element.
-     * @param {string} line.type - Display and animation style.
-     * @param {string} line.prompt - Prefix for a line element.
-     * @param {number} line.typeDelay - Delay between each typed character, in ms.
-     * @param {number} line.delay - Delay before next line, in ms.
-     * @param {number} line.progressLength - Number of characters displayed as progress bar.
-     * @param {string} line.progressChar - Character to use for progress bar, defaults to █.
-     * @param {string} line.cursor - Character to use for cursor, defaults to ▋.
      * @returns {Element[]} - Array of line elements.
      */
     lineDataToElements(lineData) {
         return lineData.map(line => {
             let div = document.createElement('div');
-            div.innerHTML = `
-                <span
-                    ${this.pfx}="${line.type || ''}"
-                    ${line.prompt ? `${this.pfx}-prompt="${line.prompt}"` : ''}
-                    ${line.typeDelay ? `${this.pfx}-typeDelay="${line.typeDelay}"` : ''}
-                    ${line.delay ? `${this.pfx}-delay="${line.delay}"` : ''}
-                    ${line.progressLength ? `${this.pfx}-progressLength="${line.progressLength}"` : ''}
-                    ${line.progressChar ? `${this.pfx}-progressChar="${line.progressChar}"` : ''}
-                    ${line.cursor ? `${this.pfx}-cursor="${line.cursor}"` : ''}
-                >${line.value || ''}</span>
-            `;
-          
+            div.innerHTML = `<span ${this._attributes(line)}>${line.value || ''}</span>`;
+
             return div.firstElementChild;
         });
+    }
+
+    /**
+     * Helper function for generating attributes string.
+     * 
+     * @param {Object} line - Line data object.
+     * @returns {string} - String of attributes.
+     */
+    _attributes(line) {
+        let attrs = '';
+        for (let prop in line) {
+            attrs += this.pfx;
+
+            if (prop === 'type') {
+                attrs += `="${line[prop]}" `
+            } else if (prop !== 'value') {
+                attrs += `-${prop}="${line[prop]}" `
+            }
+        }
+
+        return attrs;
     }
 }
 
