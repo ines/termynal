@@ -35,7 +35,7 @@ When you include [`termynal.js`](termynal.js), you can specify the container(s) 
 You also need to include the stylesheet, [`termynal.css`](termynal.css)  in your site's `<head>`:
 
 ```html
-<lin rel="stylesheet" href="termynal.css">
+<link rel="stylesheet" href="termynal.css">
 ```
 
 That's it!
