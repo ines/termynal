@@ -22,6 +22,7 @@ class Termynal {
      * @param {number} options.lineDelay - Delay between each line, in ms.
      * @param {number} options.progressLength - Number of characters displayed as progress bar.
      * @param {string} options.progressChar – Character to use for progress bar, defaults to █.
+	 * @param {number} options.progressPercent - Max percent of progress.
      * @param {string} options.cursor – Character to use for cursor, defaults to ▋.
      * @param {boolean} options.noInit - Don't initialise the animation.
      */
@@ -38,6 +39,8 @@ class Termynal {
             || parseFloat(this.container.getAttribute(`${this.pfx}-progressLength`)) || 40;
         this.progressChar = options.progressChar
             || this.container.getAttribute(`${this.pfx}-progressChar`) || '█';
+		this.progressPercent = options.progressPercent
+            || parseFloat(this.container.getAttribute(`${this.pfx}-progressPercent`)) || 100;
         this.cursor = options.cursor
             || this.container.getAttribute(`${this.pfx}-cursor`) || '▋';
         if (!options.noInit) this.init()
@@ -112,6 +115,8 @@ class Termynal {
         const progressChar = line.getAttribute(`${this.pfx}-progressChar`)
             || this.progressChar;
         const chars = progressChar.repeat(progressLength);
+		const progressPercent = line.getAttribute(`${this.pfx}-progressPercent`)
+			|| this.progressPercent;
         line.textContent = '';
         this.container.appendChild(line);
 
@@ -119,6 +124,9 @@ class Termynal {
             await this._wait(this.typeDelay);
             const percent = Math.round(i / chars.length * 100);
             line.textContent = `${chars.slice(0, i)} ${percent}%`;
+			if (percent>progressPercent) {
+				break;
+			}
         }
     }
 
