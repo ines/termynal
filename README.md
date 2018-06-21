@@ -116,6 +116,13 @@ You can change the style by customising the elements in [termynal.css](terminal.
 }
 ```
 
+### `data-ty-progressPercent`: set max percent of progress
+
+| Attributes |  Output |
+| --- | --- |
+| `data-ty="progress"` | `████████████████████████████████████████ 100%` |
+| `data-ty="progress" data-ty-progressPercent="81"` | `█████████████████████████████████ 83%` |
+
 ### `data-ty-cursor`: display a cursor
 
 Each line set to `data-ty="input"` will be rendered with an animated cursor. Termynal does this by adding a `data-ty-cursor` attribute, and removing it when the line animation has completed (after the delay specified as `lineDelay`). The value of the `data-ty-cursor` sets the cursor style – by default, a small unicode block is used: `▋`. You can set a custom cursor character in the global settings, or overwrite it on a particular line:
