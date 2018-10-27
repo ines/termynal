@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>termynal.js example</title>
+        <meta charset="utf-8">
+        <!-- include the termynal stylesheet -->
+        <link rel="stylesheet" href="termynal.css">
+        <!-- some custom styles for the page -->
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono">
+        <style>
+            body {
+                --color-bg: #ddd;
+                --color-text: #1a1e24;
+                --color-text-subtle: #D76D77;
+
+                padding: 0; margin: 0;
+                background: -webkit-linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+  background: linear-gradient(to right, #3a1c71, #d76d77, #ffaf7b);
+                width: 100%;
+                min-height: 100vh;
+                display: -webkit-box; display: -ms-flexbox; display: flex;
+                -webkit-box-align: center; -ms-flex-align: center; align-items: center;
+                -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;
+                -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- the termynal container -->
+        <div id="termynal"></div>
+
+        <!-- include and initialise termynal.js -->
+        <script src="termynal.js"></script>
+        <script>
+          var termynal = new Termynal('#termynal', {
+            typeDelay: 40,
+            lineDelay: 700,
+            lineData: [
+              { type: 'input', prompt: '▲', value: 'npm uninstall react' },
+              { value: 'Are you sure you want to uninstall \'react\'?' },
+              { type: 'input',  typeDelay: 1000, prompt: '(y/n)', value: 'y' },
+              { type: 'progress', progressChar: '·' },
+              { value: 'Uninstalled \'react\'' },
+              { type: 'input', prompt:'▲', value: 'node' },
+              { type: 'input', prompt: '>', value: `Array(5).fill('🦄 ')` },
+              { value: `['🦄', '🦄', '🦄', '🦄', '🦄']` },
+              { type: 'input', prompt: '▲', value: 'cd ~/repos' },
+              { type: 'input', prompt: '▲ ~/repos', value: ' git checkout branch master' },
+              { type: 'input', prompt: '▲ ~/repos (master)', value: 'git commit -m \'Fix things\'' },
+            ]
+          });
+        </script>
+    </body>
+</html>

@@ -23,6 +23,7 @@ class Termynal {
      * @param {number} options.progressLength - Number of characters displayed as progress bar.
      * @param {string} options.progressChar – Character to use for progress bar, defaults to █.
      * @param {string} options.cursor – Character to use for cursor, defaults to ▋.
+     * @param {Object[]} lineData - Dynamically loaded line data objects.
      * @param {boolean} options.noInit - Don't initialise the animation.
      */
     constructor(container = '#termynal', options = {}) {
@@ -40,6 +41,7 @@ class Termynal {
             || this.container.getAttribute(`${this.pfx}-progressChar`) || '█';
         this.cursor = options.cursor
             || this.container.getAttribute(`${this.pfx}-cursor`) || '▋';
+        this.lineData = this.lineDataToElements(options.lineData || []);
         if (!options.noInit) this.init()
     }
 
@@ -47,10 +49,19 @@ class Termynal {
      * Initialise the widget, get lines, clear container and start animation.
      */
     init() {
-        this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)];
+        // Appends dynamically loaded lines to existing line elements.
+        this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)].concat(this.lineData);
+
+        /** 
+         * Calculates width and height of Termynal container.
+         * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
+         */ 
         const containerStyle = getComputedStyle(this.container);
-        this.container.style.width = containerStyle.width;
-        this.container.style.minHeight = containerStyle.height;
+        this.container.style.width = containerStyle.width !== '0px' ? 
+            containerStyle.width : undefined;
+        this.container.style.minHeight = containerStyle.height !== '0px' ? 
+            containerStyle.height : undefined;
+
         this.container.setAttribute('data-termynal', '');
         this.container.innerHTML = '';
         this.start();
@@ -128,6 +139,43 @@ class Termynal {
      */
     _wait(time) {
         return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+    /**
+     * Converts line data objects into line elements.
+     * 
+     * @param {Object[]} lineData - Dynamically loaded lines.
+     * @param {Object} line - Line data object.
+     * @returns {Element[]} - Array of line elements.
+     */
+    lineDataToElements(lineData) {
+        return lineData.map(line => {
+            let div = document.createElement('div');
+            div.innerHTML = `<span ${this._attributes(line)}>${line.value || ''}</span>`;
+
+            return div.firstElementChild;
+        });
+    }
+
+    /**
+     * Helper function for generating attributes string.
+     * 
+     * @param {Object} line - Line data object.
+     * @returns {string} - String of attributes.
+     */
+    _attributes(line) {
+        let attrs = '';
+        for (let prop in line) {
+            attrs += this.pfx;
+
+            if (prop === 'type') {
+                attrs += `="${line[prop]}" `
+            } else if (prop !== 'value') {
+                attrs += `-${prop}="${line[prop]}" `
+            }
+        }
+
+        return attrs;
     }
 }
 
