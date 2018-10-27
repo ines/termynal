@@ -41,6 +41,16 @@
             box-shadow: 25px 0 0 #f4c025, 50px 0 0 #3ec930;
 }
 
+[data-termynal]:after {
+    content: 'bash';
+    position: absolute;
+    color: var(--color-text-subtle);
+    top: 5px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
 [data-ty] {
     display: block;
     line-height: 2;
