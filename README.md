@@ -65,6 +65,7 @@ The following settings are available:
 | `startDelay` | number | `600` | Delay before animation, in ms. |
 | `typeDelay` | number | `90` | Delay between each typed character, in ms. |
 | `lineDelay` | number | `1500` | Delay between each line, in ms. |
+| `inputDelay` | number | `0` | Delay between prompt and input, in ms. |
 | `progressLength` | number | `40` | Number of characters displayed as progress bar. |
 | `progressChar` | string | `'█'` | Character to use for progress bar. |
 | `cursor` | string | `'▋'` | Character to use for cursor. |
@@ -157,7 +158,7 @@ var termynal = new Termynal('#termynal',
         lineData: [
             { type: 'input', value: 'pip install spacy' },
             { value: 'Are you sure you want to install \'spaCy\'?' },
-            { type: 'input',  typeDelay: 1000, prompt: '(y/n)', value: 'y' },
+            { type: 'input',  inputDelay: 1000, prompt: '(y/n)', value: 'y' },
             { delay: 1000, value: 'Installing spaCy...' }
         ]
     }
