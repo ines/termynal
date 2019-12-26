@@ -149,7 +149,7 @@ You can also change the cursor style and animation in [`termynal.css`](termynal.
 
 ### Dynamically loading lines
 
-Lines can be dynamically loaded by passing an array of line data objects, using the [attribute suffixes](#data-ty-prompt-prompt-style), as a property of the [settings](#customising-termynal) object.
+Lines can be dynamically loaded by passing an array of line data objects, using the [attribute suffixes](#data-ty-prompt-prompt-style), as a property of the [settings](#customising-termynal) object. You can also pass a `class` attribute to customize the styles in the generated `<span>`s.
 
 ```javascript
 var termynal = new Termynal('#termynal',
@@ -158,6 +158,7 @@ var termynal = new Termynal('#termynal',
             { type: 'input', value: 'pip install spacy' },
             { value: 'Are you sure you want to install \'spaCy\'?' },
             { type: 'input',  typeDelay: 1000, prompt: '(y/n)', value: 'y' },
+            { value: 'this will take a moment', class: 'comment' },
             { delay: 1000, value: 'Installing spaCy...' }
         ]
     }
