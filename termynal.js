@@ -174,6 +174,10 @@ class Termynal {
     _attributes(line) {
         let attrs = '';
         for (let prop in line) {
+            if (prop === 'class') {
+                attrs += ` class=${line[prop]} `
+                continue
+            }
             attrs += this.pfx;
 
             if (prop === 'type') {
