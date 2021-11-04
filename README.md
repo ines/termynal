@@ -68,6 +68,7 @@ The following settings are available:
 | `progressLength` | number | `40` | Number of characters displayed as progress bar. |
 | `progressChar` | string | `'█'` | Character to use for progress bar. |
 | `cursor` | string | `'▋'` | Character to use for cursor. |
+| `loop` | boolean | `false` | loop for play |
 | `noInit` | boolean | `false` | Don't initialise the animation on load. This means you can call `Termynal.init()` yourself whenever and however you want.
 | `lineData` | Object[] | `null` | [Dynamically load](#dynamically-loading-lines) lines at instantiation.
 

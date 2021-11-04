@@ -26,6 +26,7 @@ class Termynal {
      * @param {string} options.cursor – Character to use for cursor, defaults to ▋.
      * @param {Object[]} lineData - Dynamically loaded line data objects.
      * @param {boolean} options.noInit - Don't initialise the animation.
+     * @param {boolean} options.loop - Loop for play
      */
     constructor(container = '#termynal', options = {}) {
         this.container = (typeof container === 'string') ? document.querySelector(container) : container;
@@ -40,10 +41,12 @@ class Termynal {
             || parseFloat(this.container.getAttribute(`${this.pfx}-progressLength`)) || 40;
         this.progressChar = options.progressChar
             || this.container.getAttribute(`${this.pfx}-progressChar`) || '█';
-		this.progressPercent = options.progressPercent
+		    this.progressPercent = options.progressPercent
             || parseFloat(this.container.getAttribute(`${this.pfx}-progressPercent`)) || 100;
         this.cursor = options.cursor
             || this.container.getAttribute(`${this.pfx}-cursor`) || '▋';
+        this.loop = options.loop
+            || this.container.getAttribute(`${this.pfx}-loop`) || false;
         this.lineData = this.lineDataToElements(options.lineData || []);
         if (!options.noInit) this.init()
     }
@@ -55,14 +58,14 @@ class Termynal {
         // Appends dynamically loaded lines to existing line elements.
         this.lines = [...this.container.querySelectorAll(`[${this.pfx}]`)].concat(this.lineData);
 
-        /** 
+        /**
          * Calculates width and height of Termynal container.
          * If container is empty and lines are dynamically loaded, defaults to browser `auto` or CSS.
-         */ 
+         */
         const containerStyle = getComputedStyle(this.container);
-        this.container.style.width = containerStyle.width !== '0px' ? 
+        this.container.style.width = containerStyle.width !== '0px' ?
             containerStyle.width : undefined;
-        this.container.style.minHeight = containerStyle.height !== '0px' ? 
+        this.container.style.minHeight = containerStyle.height !== '0px' ?
             containerStyle.height : undefined;
 
         this.container.setAttribute('data-termynal', '');
@@ -97,6 +100,9 @@ class Termynal {
             }
 
             line.removeAttribute(`${this.pfx}-cursor`);
+        }
+        if(this.loop) {
+            this.init();
         }
     }
 
@@ -151,7 +157,7 @@ class Termynal {
 
     /**
      * Converts line data objects into line elements.
-     * 
+     *
      * @param {Object[]} lineData - Dynamically loaded lines.
      * @param {Object} line - Line data object.
      * @returns {Element[]} - Array of line elements.
@@ -167,7 +173,7 @@ class Termynal {
 
     /**
      * Helper function for generating attributes string.
-     * 
+     *
      * @param {Object} line - Line data object.
      * @returns {string} - String of attributes.
      */
